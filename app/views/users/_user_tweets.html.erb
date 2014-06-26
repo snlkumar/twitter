@@ -1,0 +1,5 @@
+<%unless current_user.tweets.blank?%>
+  <%current_user.tweets.each do |t|%>
+     <%=t.text%><%=link_to "retweet", retweet_tweet_path(t.id),:method=>"POST"%>
+  <%end%>
+<%end%>

@@ -1,0 +1,48 @@
+<p>Hi This is <%=current_user.email%></p> 
+  <div style="width: 40px;">
+   <%=form_for @tweet do |f|%>
+   <%=f.label "Tweet"%><br />
+   <%=f.hidden_field :user_id%>   
+   <%=f.text_area :text,:cols => 50, :rows => 5%>   
+   <%=f.submit "Post",:id=>"post_tweet",:disable=>false%>
+   <%end%>
+   <div>
+   <span>Tweets</span><br />
+       <%=current_user.tweets.count%>  
+       <br />
+       </div>
+   <div>
+   	
+   <span>Follwings</span><br />
+       <%=current_user.followed_users.count%>  
+       <br />
+    </div>&nbsp;
+     <div>
+   <span>Followers</span><br />
+       <%=current_user.reverse_relationships.count%>  
+       <br />
+       </div>
+       </div>
+       <div style="width: 60px;">
+       	<%=render 'user_tweets'%>
+       </div>
+<%if current_user%>
+<%=link_to "Logout",destroy_user_session_path,:method=>'delete'%>
+
+<%end%>
+
+
+<div align="right">
+	To Follows<br />
+	
+
+	<%unless @all_users.blank?%>
+	<ul>
+	<%@all_users.each do |u|%>	
+	<%unless current_user.following?(u)%>
+	<li><%=u.email%><a href="<%=my_following_path(:id=>u.id)%>">Follow Me</a></li>
+	<%end%> 
+	<%end%>
+	</ul>
+	<%end%>
+</div>
